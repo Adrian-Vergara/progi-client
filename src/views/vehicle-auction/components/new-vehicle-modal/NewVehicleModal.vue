@@ -27,8 +27,8 @@
                     <a-form-item label="Price" class="ml-2">
                         <a-input-number
                             v-model:value="form.price"
-                            :formatter="value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                            :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                            :formatter="(value: string) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                            :parser="(value: string) => value.replace(/\$\s?|(,*)/g, '')"
                             @keyup.enter="calculate"
                         />
                     </a-form-item>

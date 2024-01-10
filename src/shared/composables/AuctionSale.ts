@@ -18,7 +18,7 @@ const auctionSale = () => {
         )
     }
 
-    const save = async (data: FormCreateAuctionSale): Promise<{ data: { message: string, data: { id: string } } }> => {
+    const save = async (data: FormCreateAuctionSale): Promise<{ message: string, data: { id: string } }> => {
         return await httpClient.post<{ message: string, data: { id: string } }>(
             `/v1/car-types/${ data.carTypeId }/auction-sales`,
             {

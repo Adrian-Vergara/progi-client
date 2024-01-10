@@ -1,6 +1,13 @@
 import { defineComponent } from 'vue'
 import type { CalculatedAmount } from '@/shared/interfaces/CalculatedAmount';
 
+const moneyFormatter: Intl.NumberFormat = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+});
+
 export default defineComponent({
     name: 'VehicleTable',
     props: {
@@ -8,23 +15,17 @@ export default defineComponent({
     },
     data () {
         return {
-            moneyFormatter: new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 2, // Ensures at least two decimal places
-                maximumFractionDigits: 2  // Limits to only two decimal places
-            }),
             columns: [
                 {
                     title: 'Vehicle Type',
                     key: 'car_type',
-                    customRender: ({ record }) => record?.car_type?.name,
+                    customRender: ({ record }: { record: CalculatedAmount }): string => record?.car_type?.name
                 },
                 {
                     title: 'Vehicle Price ($)',
                     dataIndex: 'price',
                     key: 'price',
-                    customRender: ({ text }): string => this.moneyFormatter.format(text)
+                    customRender: ({ record }: { record: CalculatedAmount }): string => moneyFormatter.format(record?.price)
                 },
                 {
                     title: 'Fees ($)',
@@ -33,25 +34,25 @@ export default defineComponent({
                             title: 'Basic',
                             dataIndex: 'basic_user_fee',
                             key: 'basic_user_fee',
-                            customRender: ({ text }): string => this.moneyFormatter.format(text),
+                            customRender: ({ record }: { record: CalculatedAmount }): string => moneyFormatter.format(record?.basic_user_fee),
                         },
                         {
                             title: 'Special',
                             dataIndex: 'seller_special_fee',
                             key: 'seller_special_fee',
-                            customRender: ({ text }): string => this.moneyFormatter.format(text),
+                            customRender: ({ record }: { record: CalculatedAmount }): string => moneyFormatter.format(record?.seller_special_fee),
                         },
                         {
                             title: 'Association',
                             dataIndex: 'association_fee',
                             key: 'association_fee',
-                            customRender: ({ text }): string => this.moneyFormatter.format(text),
+                            customRender: ({ record }: { record: CalculatedAmount }): string => moneyFormatter.format(record?.association_fee),
                         },
                         {
                             title: 'Storage',
                             dataIndex: 'fixed_storage_fee',
                             key: 'fixed_storage_fee',
-                            customRender: ({ text }): string => this.moneyFormatter.format(text),
+                            customRender: ({ record }: { record: CalculatedAmount }): string => moneyFormatter.format(record?.fixed_storage_fee),
                         },
                     ]
                 },
@@ -59,7 +60,7 @@ export default defineComponent({
                     title: 'Total',
                     key: 'total',
                     dataIndex: 'total',
-                    customRender: ({ text }): string => this.moneyFormatter.format(text),
+                    customRender: ({ record }: { record: CalculatedAmount }): string => moneyFormatter.format(record?.total),
                 },
             ],
         }
