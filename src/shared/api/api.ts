@@ -2,7 +2,9 @@ import axios, { AxiosError, type AxiosRequestConfig } from 'axios';
 
 type IConfig = AxiosRequestConfig
 
-const url: string = 'http://localhost:8000/api';
+//const url: string = 'http://localhost:8000/api';
+
+const url: string = 'https://armoniayequilibriospa.com/progi/progi-server/public/api'
 
 const requestConfig: IConfig = {
     headers: {
